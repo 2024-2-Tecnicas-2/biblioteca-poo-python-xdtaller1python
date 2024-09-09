@@ -1,6 +1,7 @@
 import sys
 import os
 import unittest
+from io import StringIO
 
 from src.libro import Libro
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
@@ -20,6 +21,13 @@ class TestLibro(unittest.TestCase):
 
     def test_num_paginas(self):
         self.assertEqual(self.libro.num_paginas, 417)
+    
+    def test_mostrar_info_libro(self):
+        libro = Libro("Cien años de soledad", 1967, "Gabriel García Márquez", 417)
+        with StringIO() as output:
+            libro.mostrar_info(file=output)
+            self.assertEqual(output.getvalue(), "Título: Cien años de soledad\nAño de publicación: 1967\nAutor: Gabriel García Márquez\nNúmero de páginas: 417\n")
+
 
 
 if __name__ == '__main__':
